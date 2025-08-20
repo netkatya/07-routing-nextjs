@@ -24,7 +24,7 @@ export const fetchNotes = async (
     params.search = search;
   }
 
-  if (tag) {
+  if (tag && tag.toLowerCase() !== "all") {
     params.tag = tag;
   }
 
@@ -81,5 +81,5 @@ export const fetchNoteById = async (id: string): Promise<Note> => {
 export const getTags = async (): Promise<string[]> => {
   const { notes } = await fetchNotes("");
   const tags = Array.from(new Set(notes.map((note) => note.tag)));
-  return tags;
+  return [...tags];
 };

@@ -1,17 +1,23 @@
 import NotesClient from "./Notes.client";
 
 type Props = {
-  params: Promise<{ slug: string[] }>;
+  params: Promise<{ slug?: string }>; // зверни увагу — масив рядків
 };
 
 export default async function NotesPage({ params }: Props) {
-  const { slug } = await params;
+  console.log("page params:", params);
+  const resolvedParams = await params;
+  const slugTag = resolvedParams.slug; // беремо перший сегмент URL
 
-  return (
-    <div>
-      <NotesClient />
-      <h1>Docs page</h1>
-      <p>Current path: {slug?.join(" / ") || "home"}</p>
-    </div>
-  );
+  const tagMap: Record<string, string> = {
+    work: "Work",
+    personal: "Personal",
+    meeting: "Meeting",
+    shopping: "Shopping",
+    todo: "Todo",
+  };
+
+  const tag = slugTag ? tagMap[slugTag.toLowerCase()] : undefined;
+
+  return <NotesClient tag={tag} />;
 }

@@ -22,7 +22,7 @@ export default function TagsMenu({ tags }: TagsMenuProps) {
         <ul className={css.menuList}>
           <li className={css.menuItem}>
             <Link
-              href="/notes/filter"
+              href="/notes/filter/all"
               onClick={toggle}
               className={css.menuLink}
             >
@@ -32,7 +32,7 @@ export default function TagsMenu({ tags }: TagsMenuProps) {
           {tags.map((tag) => (
             <li key={tag} className={css.menuItem}>
               <Link
-                href={`/notes?tag=${tag}`}
+                href={`/notes/filter/${tag}`}
                 onClick={toggle}
                 className={css.menuLink}
               >
