@@ -17,7 +17,8 @@ export default async function NotesPage({ params }: Props) {
     todo: "Todo",
   };
 
-  const tag = slugTag ? tagMap[slugTag.toLowerCase()] : undefined;
+  const tag =
+    typeof slugTag === "string" ? tagMap[slugTag.toLowerCase()] : undefined;
 
   return <NotesClient tag={tag} />;
 }
