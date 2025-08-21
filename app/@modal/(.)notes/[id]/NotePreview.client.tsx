@@ -2,20 +2,13 @@
 
 import NoteModal from "@/components/NoteModal/NoteModal";
 import css from "./NotePreview.module.css";
+import { Note } from "@/types/note";
 
-type Note = {
-  title: string;
-  content: string;
-  createdAt: string;
-  updatedAt: string;
-  tag: string;
-};
-
-type Props = {
+type NotePreviewProps = {
   note: Note;
 };
 
-const NotePreviewClient = ({ note }: Props) => {
+const NotePreviewClient = ({ note }: NotePreviewProps) => {
   return (
     <NoteModal>
       <div className={css.item}>
