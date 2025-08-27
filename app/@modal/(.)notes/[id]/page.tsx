@@ -3,11 +3,11 @@ import NotePreviewClient from "./NotePreview.client";
 import { Note } from "@/types/note";
 
 type Props = {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 };
 
 const Page = async ({ params }: Props) => {
-  const note: Note = await fetchNoteById((await params).id);
+  const note: Note = await fetchNoteById(params.id);
 
   return <NotePreviewClient note={note} />;
 };
