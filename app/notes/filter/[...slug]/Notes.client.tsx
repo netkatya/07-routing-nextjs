@@ -23,14 +23,6 @@ export default function NotesClient({ tag }: NotesClientProps) {
   const [debouncedSearch] = useDebounce(search, 500);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  console.log("NotesClient props:", { tag });
-  console.log("Fetching notes with:", {
-    search: debouncedSearch,
-    page,
-    perPage: 12,
-    tag,
-  });
-
   const { data, isFetching, isError, error } = useQuery<FetchNotesResponse>({
     queryKey: ["notes", debouncedSearch, page, tag],
     queryFn: () => fetchNotes(debouncedSearch, page, 12, tag),
