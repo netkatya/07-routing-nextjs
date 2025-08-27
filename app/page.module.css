@@ -1,5 +1,7 @@
 .main {
     flex: 1;
+    box-sizing: border-box;
+    padding: 16px;
 }
 
 .container {

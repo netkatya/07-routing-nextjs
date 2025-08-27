@@ -13,7 +13,7 @@ export interface FetchNotesResponse {
 export const fetchNotes = async (
   search: string,
   page = 1,
-  perPage = 12,
+  perPage = 9,
   tag?: string
 ): Promise<FetchNotesResponse> => {
   const params: Record<string, string> = {
