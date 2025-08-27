@@ -2,13 +2,15 @@
 
 import { useRouter } from "next/navigation";
 import css from "./NotePreview.module.css";
-import { Note } from "@/types/note";
+import { useQuery } from "@tanstack/react-query";
+import { fetchNoteById } from "@/lib/api";
+import Loader from "@/app/loading";
 
 type NotePreviewProps = {
-  note: Note;
+  id: string;
 };
 
-const NoteModal = ({ children }: { children: React.ReactNode }) => {
+const Modal = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const close = () => router.back();
 
@@ -24,9 +26,18 @@ const NoteModal = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-const NotePreviewClient = ({ note }: NotePreviewProps) => {
+const NotePreviewClient = ({ id }: NotePreviewProps) => {
+  const { data: note, isLoading } = useQuery({
+    queryKey: ["note", id],
+    queryFn: () => fetchNoteById(id),
+    placeholderData: (prev) => prev,
+  });
+
+  if (isLoading) return <Loader />;
+  if (!note) return <p>Note not found</p>;
+
   return (
-    <NoteModal>
+    <Modal>
       <div className={css.item}>
         <h2 className={`${css.header} ${css.h2}`}>{note.title}</h2>
         <p className={css.content}>{note.content}</p>
@@ -38,7 +49,7 @@ const NotePreviewClient = ({ note }: NotePreviewProps) => {
         </p>
         <p className={css.tag}>{note.tag}</p>
       </div>
-    </NoteModal>
+    </Modal>
   );
 };
 
