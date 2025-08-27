@@ -7,18 +7,22 @@ import NotesClient from "./Notes.client";
 import { fetchNotes } from "@/lib/api";
 
 type Props = {
-  params: Promise<{ slug: string[] }>;
+  params: { slug?: string[] };
 };
 
 export default async function NotesPage({ params }: Props) {
-  const { slug } = await params;
+  const slugTags = params?.slug ?? [];
 
-  const tag = slug[0] === "all" ? undefined : slug[0];
+  const apiTags = slugTags.map(
+    (tag) => tag.charAt(0).toUpperCase() + tag.slice(1).toLowerCase()
+  );
+
+  const tag = apiTags[0];
 
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
-    queryKey: ["notes", 1, "", tag],
-    queryFn: () => fetchNotes("", 1, undefined, tag),
+    queryKey: ["notes", "", 1, tag],
+    queryFn: () => fetchNotes("", 1, 12, tag),
   });
 
   return (
