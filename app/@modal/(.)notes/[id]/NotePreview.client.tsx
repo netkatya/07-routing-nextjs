@@ -31,6 +31,7 @@ const NotePreviewClient = ({ id }: NotePreviewProps) => {
     queryKey: ["note", id],
     queryFn: () => fetchNoteById(id),
     placeholderData: (prev) => prev,
+    refetchOnMount: false,
   });
 
   if (isLoading) return <Loader />;
